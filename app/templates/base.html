@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% if title %}
+        <title>{{ title }}|ROARS System</title>
+    {% else %}
+        <title>Resolution Ordinance And Reports Storage System</title>
+    {% endif %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../static/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap.min.css">
+    {% block head %} {% endblock %}
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <nav>
+                <ul class="nav nav-pills pull-right">
+                    {% if page == "index" %}
+                    <li role="presentation" class="active">
+                        <a href="index">Home</a>
+                    </li>
+                    {% else %}
+                    <li role="presentation">
+                        <a href="index">Home</a>
+                    </li>
+                    {% endif %}
+                    <li role="presentation" class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">
+                            Add Document <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="#">Add Resolution</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a href="#">Add Ordinance</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a href="#" >Add Reports</a>
+                            </li>
+                        </ul>
+                    </li>
+                    {% if page == "adduser" %}
+                    <li role="presentation" class="active">
+                        <a href="adduser">Add User</a>
+                    </li>
+                    {% else %}
+                    <li role="presentation">
+                        <a href="adduser">Add User</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            <h3 class="text-muted">ROARS System</h3>
+        </div>
+        {% block content %}{% endblock %}
+        <footer class="footer">
+            <p>&copy; Company 2015</p>
+        </footer>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block head %}
+    <link href="../static/adduser.css" rel="stylesheet">
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+      <div class="jumbotron">
+        <h1>Add User</h1>
+        <form class="form-signin">
+            <label for="inputUsername" class="sr-only">Username</label>
+            <input type="username" name="inputUsername" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required>
+
+            <label for="inputName" class="sr-only">Name</label>
+            <input type="name" name="inputName" id="inputName" class="form-control" placeholder="Name">
+
+            <label for="inputAddress" class="sr-only">Address</label>
+            <input type="address" name="inputAddress" id="inputAddress" class="form-control" placeholder="Address">
+
+            <div class="form-group-lg">
+              <select class="form-control" name="inputPermission" id="inputPermission">
+                <option>- Select Permission -</option>
+                <option>Administrator</option>
+                <option>Editor</option>
+                <option>User</option>
+              </select>
+            </div>
+
+            <button id="btnAddUser" class="btn btn-lg btn-primary btn-block" type="button">Add User</button>
+        </form>
+      </div>
+{% endblock %}
