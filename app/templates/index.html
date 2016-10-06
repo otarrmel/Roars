@@ -9,6 +9,12 @@
         <p class="lead"></p>
         <h3>Municipality of Getafe</h3>
     </div>
+    {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+        </div>
+    {% endfor %}
 
     <div class="row marketing">
         <div class="col-lg-6">

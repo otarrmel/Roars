@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block head %}
+    <link href="../static/adduser.css" rel="stylesheet">
     <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
 {% endblock %}
 
@@ -12,15 +13,14 @@
           </div>
           {% endfor %}
         <h1>Add User</h1>
-        <form class="form-signin" method="post" role="form">
+        <form class="form-signin" method="post" name="adduser">
+            {{ form.hidden_tag() }}
             <label for="inputUsername" class="sr-only">Username</label>
             <input type="username" name="inputUsername" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+            {{ form.username(size=64) }}
 
             <label for="inputPassword" class="sr-only">Password</label>
             <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required>
-
-            <label for="inputConfirm" class="sr-only">Confirm Password</label>
-            <input type="password" name="inputConfirm" id="inputConfirm" class="form-control" placeholder="Confirm Password" required>
 
             <label for="inputName" class="sr-only">Name</label>
             <input type="name" name="inputName" id="inputName" class="form-control" placeholder="Name">
@@ -29,11 +29,11 @@
             <input type="address" name="inputAddress" id="inputAddress" class="form-control" placeholder="Address">
 
             <div class="form-group-lg">
-              <select class="form-control" name="inputRole" id="inputRole" required>
-                <option value="">- Select Role -</option>
-                <option value="User">User</option>
-                <option value="Editor">Editor</option>
-                <option value="Administrator">Administrator</option>
+              <select class="form-control" name="inputRole" id="inputRole">
+                <option>- Select Role -</option>
+                <option>Administrator</option>
+                <option>Editor</option>
+                <option>User</option>
               </select>
             </div>
 
