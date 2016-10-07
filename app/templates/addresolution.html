@@ -11,33 +11,24 @@
             {{ message }}
           </div>
           {% endfor %}
-        <h1>Add User</h1>
-        <form class="form-signin" method="post" role="form">
-            <label for="inputUsername" class="sr-only">Username</label>
-            <input type="username" name="inputUsername" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+        <h1>Add Resolution</h1>
+        <form class="form-signin" method="post" role="form" enctype=multipart/form-data>
+            <label for="resNum" class="sr-only">Resolution No.</label>
+            <input type="text" name="resNum" id="resNum" class="form-control" placeholder="Resolution Number" required autofocus>
 
-            <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required>
+            <label for="resName" class="sr-only">Resolution Name</label>
+            <input type="text" name="resName" id="resName" class="form-control" placeholder="Resolution Name" required>
 
-            <label for="inputConfirm" class="sr-only">Confirm Password</label>
-            <input type="password" name="inputConfirm" id="inputConfirm" class="form-control" placeholder="Confirm Password" required>
+            <label for="supervisor" class="sr-only">Supervisor</label>
+            <input type="text" name="supervisor" id="supervisor" class="form-control" placeholder="Supervisor" required>
 
-            <label for="inputName" class="sr-only">Name</label>
-            <input type="name" name="inputName" id="inputName" class="form-control" placeholder="Name">
+            <label for="resolveDate" class="sr-only">Resolve Date</label>
+            <input type="date" name="resolveDate" id="resolveDate" class="form-control" placeholder="Resolve Date" required>
 
-            <label for="inputAddress" class="sr-only">Address</label>
-            <input type="address" name="inputAddress" id="inputAddress" class="form-control" placeholder="Address">
+            <label for="uploadedFile" class="sr-only">Upload File</label>
+            <input type="file" name="uploadedFile" id="uploadedFile" class="form-control" placeholder="Upload File" required>
 
-            <div class="form-group-lg">
-              <select class="form-control" name="inputRole" id="inputRole" required>
-                <option value="">- Select Role -</option>
-                <option value="User">User</option>
-                <option value="Editor">Editor</option>
-                <option value="Administrator">Administrator</option>
-              </select>
-            </div>
-
-            <button id="btnAddUser" class="btn btn-lg btn-primary btn-block" type="submit">Add User</button>
+            <button id="btnAddResolution" class="btn btn-lg btn-primary btn-block" type="submit">Add Resolution</button>
         </form>
       </div>
 {% endblock %}

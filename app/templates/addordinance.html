@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block head %}
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+      <div class="jumbotron">
+          {% for message in get_flashed_messages() %}
+          <div class="alert alert-warning">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ message }}
+          </div>
+          {% endfor %}
+        <h1>Add Ordinance</h1>
+        <form class="form-signin" method="post" role="form" enctype=multipart/form-data>
+            <label for="ordNum" class="sr-only">Ordinance No.</label>
+            <input type="text" name="ordNum" id="ordNum" class="form-control" placeholder="Ordinance Number" required autofocus>
+
+            <label for="ordName" class="sr-only">Ordinance Name</label>
+            <input type="text" name="ordName" id="ordName" class="form-control" placeholder="Ordinance Name" required>
+
+            <label for="description" class="sr-only">Description</label>
+            <input type="text" name="description" id="description" class="form-control" placeholder="Description" required>
+
+            <label for="sessionDate" class="sr-only">Session Date</label>
+            <input type="date" name="sessionDate" id="sessionDate" class="form-control" placeholder="Session Date" required>
+
+            <label for="uploadedFile" class="sr-only">Upload File</label>
+            <input type="file" name="uploadedFile" id="uploadedFile" class="form-control" placeholder="Upload File" required>
+
+            <button id="btnAddOrdinance" class="btn btn-lg btn-primary btn-block" type="submit">Add Ordinance</button>
+        </form>
+      </div>
+{% endblock %}

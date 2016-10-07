@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block head %}
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+      <div class="jumbotron">
+          {% for message in get_flashed_messages() %}
+          <div class="alert alert-warning">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ message }}
+          </div>
+          {% endfor %}
+        <h1>Add Report</h1>
+        <form class="form-signin" method="post" role="form" enctype=multipart/form-data>
+            <label for="repName" class="sr-only">Report Name</label>
+            <input type="text" name="repName" id="repName" class="form-control" placeholder="Report Name" required autofocus>
+
+            <label for="reporter" class="sr-only">Reporter</label>
+            <input type="text" name="reporter" id="reporter" class="form-control" placeholder="Reporter" required>
+
+            <label for="reportedDate" class="sr-only">Reported Date</label>
+            <input type="date" name="reportedDate" id="reportedDate" class="form-control" placeholder="Reported Date" required>
+
+            <label for="uploadedFile" class="sr-only">Upload File</label>
+            <input type="file" name="uploadedFile" id="uploadedFile" class="form-control" placeholder="Upload File" required>
+
+            <button id="btnAddOrdinance" class="btn btn-lg btn-primary btn-block" type="submit">Add Report</button>
+        </form>
+      </div>
+{% endblock %}
