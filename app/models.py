@@ -57,3 +57,84 @@ class UserRole(db.Model):
 
     def __repr__(self):
         return '<UseRole ID %r>' % (self.id)
+
+
+class Document(db.Model):
+    __tablename__ = 'document'
+    id = db.Column(db.Integer, primary_key=True)
+    document_name = db.Column(db.String(64), unique=True)
+
+    def __init__(self, document_name):
+        self.document_name = document_name
+
+    def __repr__(self):
+        return '<Document Name %r>' % (self.document_name)
+
+
+class Resolution(db.Model):
+    __tablename__ = 'resolution'
+    id = db.Column(db.Integer, primary_key=True)
+    resolution_num = db.Column(db.String(64), unique=True)
+    resolution_name = db.Column(db.String(64), unique=True)
+    supervisor = db.Column(db.String(64))
+    resolve_date = db.Column(db.Date())
+    uploaded_file = db.Column(db.String(256))
+    uploader_id = db.Column(db.Integer(), db.ForeignKey('user.id'))
+    DocTypeID = db.Column(db.Integer())
+
+    def __init__(self, resolution_num, resolution_name, supervisor, resolve_date, uploaded_file, uploader_id, DocTypeID):
+        self.resolution_num = resolution_num
+        self.resolution_name = resolution_name
+        self.supervisor = supervisor
+        self.resolve_date = resolve_date
+        self.uploaded_file = uploaded_file
+        self.uploader_id = uploader_id
+        self.DocTypeID = DocTypeID
+
+    def __repr__(self):
+        return '<Resolution Name %r>' % (self.resolution_name)
+
+
+class Ordinance(db.Model):
+    __tablename__ = 'ordinance'
+    id = db.Column(db.Integer, primary_key=True)
+    ordinance_num = db.Column(db.String(64), unique=True)
+    ordinance_name = db.Column(db.String(64), unique=True)
+    description = db.Column(db.Text())
+    session_date = db.Column(db.Date())
+    uploaded_file = db.Column(db.String(256))
+    uploader_id = db.Column(db.Integer(), db.ForeignKey('user.id'))
+    DocTypeID = db.Column(db.Integer())
+
+    def __init__(self, ordinance_num, ordinance_name, description, session_date, uploaded_file, uploader_id, DocTypeID):
+        self.ordinance_num = ordinance_num
+        self.ordinance_name = ordinance_name
+        self.description = description
+        self.session_date = session_date
+        self.uploaded_file = uploaded_file
+        self.uploader_id = uploader_id
+        self.DocTypeID = DocTypeID
+
+    def __repr__(self):
+        return '<Ordinance Name %r>' % (self.ordinance_name)
+
+
+class Report(db.Model):
+    __tablename__ = 'report'
+    id = db.Column(db.Integer, primary_key=True)
+    author = db.Column(db.String(64))
+    session_date = db.Column(db.Date())
+    uploaded_file = db.Column(db.String(256))
+    uploader_id = db.Column(db.Integer(), db.ForeignKey('user.id'))
+    DocTypeID = db.Column(db.Integer())
+
+    def __init__(self, report_name, author, reported_date, uploaded_file, uploader_id, DocTypeID):
+        self.report_name = report_name
+        self.author = author
+        self.reported_date = reported_date
+        self.uploaded_file = uploaded_file
+        self.uploader_id = uploader_id
+        self.DocTypeID = DocTypeID
+
+    def __repr__(self):
+        return '<Report Name %r>' % (self.report_name)

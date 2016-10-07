@@ -1,3 +1,4 @@
+import os
 from flask import render_template
 from flask import flash
 from flask import redirect
@@ -8,7 +9,17 @@ from app import db
 from app.models import User
 from app.models import UserRole
 from app.models import Role
+from app.models import Resolution
+from app.models import Ordinance
+from app.models import Report
 from sqlalchemy.exc import IntegrityError
+from werkzeug.utils import secure_filename
+
+userid = 1
+
+
+def allowed_file(filename, extensions):
+    return filename.rsplit('.')[1].strip() in extensions
 
 
 @app.route('/')
@@ -43,12 +54,76 @@ def adduser():
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method == 'POST':
-        inUsername = str(request.form['inputUsername'])
-        inPassword = str(request.form['inputPassword'])
-        user = User.query.filter_by(username=inUsername).first()
-        if inUsername == str(user.username) and User.verify_password(user, inPassword):
-            flash('Login successful!', 'success')
-            return redirect(url_for('index'))
-        else:
+        try:
+            inUsername = str(request.form['inputUsername'])
+            inPassword = str(request.form['inputPassword'])
+            user = User.query.filter_by(username=inUsername).first()
+            if inUsername == str(user.username) and User.verify_password(user, inPassword):
+                flash('Login successful!', 'success')
+                return redirect(url_for('index'))
+            else:
+                flash('Invalid username or password!', 'error')
+        except AttributeError:
             flash('Invalid username or password!', 'error')
+
     return render_template('login.html')
+
+
+@app.route('/addResolution', methods=['POST', 'GET'])
+def addResolution():
+    if request.method == 'POST':
+        file = request.files['uploadedFile']
+        if file.filename == '':
+            flash('No file selected!')
+        if file and allowed_file(file.filename, app.config['ALLOWED_EXTENSIONS']):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            resolution = Resolution(request.form['resNum'], request.form['resName'], request.form['supervisor'],
+                                   request.form['resolveDate'], filename, userid, 1)
+            db.session.add(resolution)
+            db.session.commit()
+            flash('New resolution document was added.', 'success')
+        else:
+            flash('Invalid file type! Here are the valid file types: .doc, .docx, pdf, png, jpg, jpeg.')
+
+    return render_template('addresolution.html')
+
+
+@app.route('/addOrdinance', methods=['POST', 'GET'])
+def addOrdinance():
+    if request.method == 'POST':
+        file = request.files['uploadedFile']
+        if file.filename == '':
+            flash('No file selected!')
+        if file and allowed_file(file.filename, app.config['ALLOWED_EXTENSIONS']):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            ordinance = Ordinance(request.form['ordNum'], request.form['ordName'], request.form['description'],
+                                   request.form['sessionDate'], filename, userid, 2)
+            db.session.add(ordinance)
+            db.session.commit()
+            flash('New ordinance document was added.', 'success')
+        else:
+            flash('Invalid file type! Here are the valid file types: .doc, .docx, pdf, png, jpg, jpeg.')
+
+    return render_template('addordinance.html')
+
+
+@app.route('/addReport', methods=['POST', 'GET'])
+def addReport():
+    if request.method == 'POST':
+        file = request.files['uploadedFile']
+        if file.filename == '':
+            flash('No file selected!')
+        if file and allowed_file(file.filename, app.config['ALLOWED_EXTENSIONS_REPORT']):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            report = Report(request.form['repName'], request.form['reporter'],
+                                   request.form['reportedDate'], filename, userid, 3)
+            db.session.add(report)
+            db.session.commit()
+            flash('New report document was added.', 'success')
+        else:
+            flash('Invalid file type! Here are the valid file types: .xls, .xlsx, .doc, .docx, .ppt, .pptx, .pdf')
+
+    return render_template('addreport.html')
