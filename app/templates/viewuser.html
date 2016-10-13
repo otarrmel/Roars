@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block head %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="jumbotron">
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+    </div>
+    {% endfor %}
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>USERNAME</th>
+                    <th>NAME</th>
+                    <th>ADDRESS</th>
+                    <th>ROLE</th>
+                    <th>MODIFY</th>
+                    <th>DELETE</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for index in users_info %}
+                <tr>
+                    <th>{{ users_info[index]['user'].id }}</th>
+                    <th>{{ users_info[index]['user'].username }}</th>
+                    <th>{{ users_info[index]['user'].name}}</th>
+                    <th>{{ users_info[index]['user'].address}}</th>
+                    <th>{{ users_info[index]['role']}}</th>
+                    <th><a href="#" data-toggle="modal" data-target="#myModal_{{ index }}"><span class="glyphicon glyphicon-pencil"></span></a>
+                        <div class="modal fade" id="myModal_{{ index }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="myModalLabel_{{ index }}">{{ users_info[index]['user'].username|upper }}</h4>
+                                    </div>
+                                    <form method="post" role="form" action="/editUser">
+                                        <div class="modal-body">
+                                            <label>ID</label>
+                                            <input type="text" name="inputID" id="inputID" class="form-control" placeholder="Name" value="{{ users_info[index]['user'].id }}" readonly>
+                                            <br>
+                                            <label>Username</label>
+                                            <input type="text" name="inputUsername" id="inputUsername" class="form-control" placeholder="Name" value="{{ users_info[index]['user'].username }}" readonly>
+                                            <br>
+                                            <label>Name</label>
+                                            <input type="text" name="inputName" id="inputName" class="form-control" placeholder="Name" value="{{ users_info[index]['user'].name }}">
+                                            <br>
+                                            <label>Address</label>
+                                            <input type="text" name="inputAddress" id="inputAddress" class="form-control" placeholder="Address" value="{{ users_info[index]['user'].address }}">
+                                            <br>
+                                            <label>Role</label>
+                                            <div class="form-group-lg">
+                                                <select class="form-control" name="inputRole" id="inputRole">
+                                                    {% if users_info[index]['role'] == "User" %}
+                                                    <option value="User" selected="selected">User</option>
+                                                    <option value="Editor">Editor</option>
+                                                    <option value="Administrator">Administrator</option>
+                                                    {% elif users_info[index]['role'] == "Editor" %}
+                                                    <option value="User">User</option>
+                                                    <option value="Editor" selected="selected">Editor</option>
+                                                    <option value="Administrator">Administrator</option>
+                                                    {% else %}
+                                                    <option value="User">User</option>
+                                                    <option value="Editor">Editor</option>
+                                                    <option value="Administrator" selected="selected">Administrator</option>
+                                                    {% endif %}
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <button id="btnEditUser" type="submit" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </th>
+                    <th>
+                        <a href="/deleteUser/{{ users_info[index]['user'].username }}"><span class="glyphicon glyphicon-trash"></span></a>
+                    </th>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </div>
+{% endblock %}

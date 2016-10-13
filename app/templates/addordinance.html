@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block head %}
-    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+    <link
 {% endblock %}
 
 {% block content %}
@@ -21,10 +21,11 @@
 
             <label for="description" class="sr-only">Description</label>
             <input type="text" name="description" id="description" class="form-control" placeholder="Description" required>
-
+            <br>
+            <label>Session Date</label>
             <label for="sessionDate" class="sr-only">Session Date</label>
             <input type="date" name="sessionDate" id="sessionDate" class="form-control" placeholder="Session Date" required>
-
+            <br>
             <label for="uploadedFile" class="sr-only">Upload File</label>
             <input type="file" name="uploadedFile" id="uploadedFile" class="form-control" placeholder="Upload File" required>
 

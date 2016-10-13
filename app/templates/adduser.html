@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block head %}
-    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+
 {% endblock %}
 
 {% block content %}
@@ -29,12 +29,12 @@
             <input type="text" name="inputAddress" id="inputAddress" class="form-control" placeholder="Address">
 
             <div class="form-group-lg">
-              <select class="form-control" name="inputRole" id="inputRole" required>
+            <select class="form-control" name="inputRole" id="inputRole" required>
                 <option value="">- Select Role -</option>
                 <option value="User">User</option>
                 <option value="Editor">Editor</option>
                 <option value="Administrator">Administrator</option>
-              </select>
+            </select>
             </div>
 
             <button id="btnAddUser" class="btn btn-lg btn-primary btn-block" type="submit">Add User</button>

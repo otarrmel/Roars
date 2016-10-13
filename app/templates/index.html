@@ -1,42 +1,54 @@
 {% extends "base.html" %}
 {% block head %}
-    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+
 {% endblock %}
 
 {% block content %}
     <div class="jumbotron">
         <img src="../static/images/Getafe_Bohol.png">
         <p class="lead"></p>
-        <h3>Municipality of Getafe</h3>
-    </div>
-    {% for message in get_flashed_messages() %}
+        <h2>Municipality of Getafe</h2>
+        {% for message in get_flashed_messages() %}
         <div class="alert alert-warning">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        {{ message }}
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ message }}
         </div>
-    {% endfor %}
+        {% endfor %}
+        {% if not session %}
+        <br>
+        <h4>Login</h4>
+        <form class="form-signin" method="post" role="form">
+            <label for="inputUsername" class="sr-only">Username</label>
+            <input type="text" name="inputUsername" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
 
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required>
+
+            <button id="btnLogin" class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+        </form>
+        {% endif %}
+    </div>
     <div class="row marketing">
         <div class="col-lg-6">
-            <h4>Bucket List</h4>
-            <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+            <h4>Lorem Ipsum</h4>
+            <p>Lorem ipsum dolor sit amet, no ius tantas lobortis pericula. Nec ex albucius pertinacia.</p>
 
-            <h4>Bucket List</h4>
-            <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
+            <h4>Lorem Ipsum</h4>
+            <p>Lorem ipsum dolor sit amet, no ius tantas lobortis pericula. Nec ex albucius pertinacia.</p>
 
-            <h4>Bucket List</h4>
-            <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+            <h4>Lorem Ipsum</h4>
+            <p>Lorem ipsum dolor sit amet, no ius tantas lobortis pericula. Nec ex albucius pertinacia.</p>
         </div>
 
         <div class="col-lg-6">
-            <h4>Bucket List</h4>
-            <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+            <h4>Lorem Ipsum</h4>
+            <p>Lorem ipsum dolor sit amet, no ius tantas lobortis pericula. Nec ex albucius pertinacia.</p>
 
-            <h4>Bucket List</h4>
-            <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
+            <h4>Lorem Ipsum</h4>
+            <p>Lorem ipsum dolor sit amet, no ius tantas lobortis pericula. Nec ex albucius pertinacia.</p>
 
-            <h4>Bucket List</h4>
-            <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+            <h4>Lorem Ipsum</h4>
+            <p>Lorem ipsum dolor sit amet, no ius tantas lobortis pericula. Nec ex albucius pertinacia.</p>
         </div>
     </div>
 {% endblock %}

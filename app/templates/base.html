@@ -8,9 +8,11 @@
     {% else %}
         <title>Resolution Ordinance And Reports Storage System</title>
     {% endif %}
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="./static/custom.js"></script>
+    <script src="./static/jquery.min.js"></script>
     <script src="../static/bootstrap/js/bootstrap.min.js"></script>
-    <link href="../static/custom.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../static/custom.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../static/jumbotron.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap.min.css">
     {% block head %} {% endblock %}
 </head>
@@ -28,6 +30,28 @@
                         <a href="index">Home</a>
                     </li>
                     {% endif %}
+                    {% if session.roleid %}
+                    <li role="presentation" class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">
+                            View Document <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="/viewResolution">View Resolution</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a href="#">View Ordinance</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a href="#">View Report</a>
+                            </li>
+                        </ul>
+                    </li>
+                    {% endif %}
+                    {% if session.roleid == 1 or session.roleid == 2 %}
                     <li role="presentation" class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false">
@@ -43,17 +67,31 @@
                             </li>
                             <li role="separator" class="divider"></li>
                             <li>
-                                <a href="/addReport">Add Reports</a>
+                                <a href="/addReport">Add Report</a>
                             </li>
                         </ul>
                     </li>
-                    {% if page == "adduser" %}
-                    <li role="presentation" class="active">
-                        <a href="adduser">Add User</a>
+                    {% endif %}
+                    {% if session.roleid == 1 %}
+                    <li role="presentation" class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">
+                        Manage <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="addUser">Add User</a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <a href="viewUser">View User</a>
+                        </li>
+                    </ul>
                     </li>
-                    {% else %}
-                    <li role="presentation">
-                        <a href="adduser">Add User</a>
+                    {% endif %}
+                    {% if session.roleid %}
+                    <li role="presentation" class="active">
+                        <a href="/logout">Logout</a>
                     </li>
                     {% endif %}
                 </ul>

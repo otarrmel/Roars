@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block head %}
-    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+
 {% endblock %}
 
 {% block content %}
@@ -21,10 +21,10 @@
 
             <label for="supervisor" class="sr-only">Supervisor</label>
             <input type="text" name="supervisor" id="supervisor" class="form-control" placeholder="Supervisor" required>
-
-            <label for="resolveDate" class="sr-only">Resolve Date</label>
-            <input type="date" name="resolveDate" id="resolveDate" class="form-control" placeholder="Resolve Date" required>
-
+            <br>
+            <label>Resolve Date</label>
+            <input type="date" name="resolveDate" id="resolveDate" class="form-control" value="Resolve Date" placeholder="Resolve Date" required>
+            <br>
             <label for="uploadedFile" class="sr-only">Upload File</label>
             <input type="file" name="uploadedFile" id="uploadedFile" class="form-control" placeholder="Upload File" required>
 
