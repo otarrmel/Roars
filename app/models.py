@@ -29,7 +29,8 @@ class User(db.Model):
         self.address = address
 
     def __repr__(self):
-        return '<Username %r>' % (self.username)
+        return "<User(id='%s', username='%s', password_hash='%s', name='%s', address='%s')>" % \
+               (self.id, self.username, self.password_hash, self.name, self.address)
 
 
 class Role(db.Model):
@@ -42,7 +43,7 @@ class Role(db.Model):
         self.role_name = role_name
 
     def __repr__(self):
-        return '<RoleName %r>' % (self.role_name)
+        return "<Role(id='%s', role_name='%s')>" % (self.id, self.role_name)
 
 
 class UserRole(db.Model):
@@ -56,7 +57,7 @@ class UserRole(db.Model):
         self.role_id = role_id
 
     def __repr__(self):
-        return '<UseRole ID %r>' % (self.id)
+        return "<UseRole(id='%s', user_id='%s', role_id='%s')>" % (self.id, self.user_id, self.role_id)
 
 
 class Document(db.Model):
@@ -78,7 +79,7 @@ class Resolution(db.Model):
     resolution_name = db.Column(db.String(64), unique=True)
     supervisor = db.Column(db.String(64))
     resolve_date = db.Column(db.Date())
-    uploaded_file = db.Column(db.String(256))
+    uploaded_file = db.Column(db.String(256), unique=True)
     uploader_id = db.Column(db.Integer(), db.ForeignKey('user.id'))
     DocTypeID = db.Column(db.Integer())
 
@@ -122,15 +123,16 @@ class Ordinance(db.Model):
 class Report(db.Model):
     __tablename__ = 'report'
     id = db.Column(db.Integer, primary_key=True)
-    author = db.Column(db.String(64))
+    report_name = db.Column(db.String(64), unique=True)
+    reporter = db.Column(db.String(64))
     session_date = db.Column(db.Date())
     uploaded_file = db.Column(db.String(256))
     uploader_id = db.Column(db.Integer(), db.ForeignKey('user.id'))
     DocTypeID = db.Column(db.Integer())
 
-    def __init__(self, report_name, author, reported_date, uploaded_file, uploader_id, DocTypeID):
+    def __init__(self, report_name, reporter, reported_date, uploaded_file, uploader_id, DocTypeID):
         self.report_name = report_name
-        self.author = author
+        self.reporter = reporter
         self.reported_date = reported_date
         self.uploaded_file = uploaded_file
         self.uploader_id = uploader_id

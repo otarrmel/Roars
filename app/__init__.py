@@ -4,7 +4,9 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config.from_object('config')
-app.config['UPLOAD_FOLDER'] = 'uploads/'
+app.config['UPLOAD_FOLDER_RESOLUTIONS'] = 'uploads/resolutions'
+app.config['UPLOAD_FOLDER_ORDINANCES'] = 'uploads/ordinances'
+app.config['UPLOAD_FOLDER_REPORTS'] = 'uploads/reports'
 app.config['ALLOWED_EXTENSIONS'] = ['doc', 'docx', 'pdf', 'png', 'jpg', 'jpeg']
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:1z2x3c*()@localhost/roars'
 app.config['ALLOWED_EXTENSIONS_REPORT'] = ['xls', 'xlsx', 'doc', 'docx', 'ppt', 'pptx', 'pdf']
