@@ -22,58 +22,58 @@
                     <th>SESSION DATE</th>
                     <th>DOCUMENT</th>
                     <th>UPLOADER</th>
-                    {% if role_id == 1 or role_id == 2 %}
+                    {% if role_id != 3 %}
                     <th>MODIFY</th>
                     <th>DELETE</th>
                     {% endif %}
                 </tr>
             </thead>
             <tbody>
-                {% for index in resolution_info %}
+                {% for index in ordinance_info %}
                 <tr>
-                    <th>{{ resolution_info[index].id }}</th>
-                    <th>{{ resolution_info[index].res_num }}</th>
-                    <th>{{ resolution_info[index].res_name}}</th>
-                    <th>{{ resolution_info[index].supervisor}}</th>
-                    <th>{{ resolution_info[index].resolve_date}}</th>
-                    <th>{{ resolution_info[index].uploaded_file}}</th>
-                    <th>{{ resolution_info[index].uploader}}</th>
-                    {% if role_id == 1 or role_id == 2 %}
+                    <th>{{ ordinance_info[index].id }}</th>
+                    <th>{{ ordinance_info[index].ord_num}}</th>
+                    <th>{{ ordinance_info[index].ord_name}}</th>
+                    <th>{{ ordinance_info[index].description}}</th>
+                    <th>{{ ordinance_info[index].session_date}}</th>
+                    <th><a href="/download/{{ ordinance_info[index].uploaded_file}}/1" target="_blank">{{ ordinance_info[index].uploaded_file}}</a></th>
+                    <th>{{ ordinance_info[index].uploader}}</th>
+                    {% if role_id != 3 %}
                     <th><a href="#" data-toggle="modal" data-target="#myModal_{{ index }}"><span class="glyphicon glyphicon-pencil"></span></a>
                         <div class="modal fade" id="myModal_{{ index }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title" id="myModalLabel_{{ index }}">{{ resolution_info[index].resolution_name|upper }}</h4>
+                                        <h4 class="modal-title" id="myModalLabel_{{ index }}">{{ ordinance_info[index].ord_name|upper }}</h4>
                                     </div>
-                                    <form method="post" role="form" action="/editResolution" enctype=multipart/form-data>
+                                    <form method="post" role="form" action="/editOrdinance" enctype=multipart/form-data>
                                         <div class="modal-body">
                                             <label>ID</label>
-                                            <input type="text" name="inputID" id="inputID" class="form-control" placeholder="ID" value="{{ resolution_info[index].id }}" readonly>
+                                            <input type="text" name="inputID" id="inputID" class="form-control" placeholder="ID" value="{{ ordinance_info[index].id }}" readonly>
                                             <br>
-                                            <label>Resolution Number</label>
-                                            <input type="text" name="resNum" id="resNum" class="form-control" placeholder="Resolution Number" value="{{ resolution_info[index].res_num }}" >
+                                            <label>Ordinance Number</label>
+                                            <input type="text" name="ordNum" id="ordNum" class="form-control" placeholder="Ordinance Number" value="{{ ordinance_info[index].ord_num }}" >
                                             <br>
-                                            <label>Resolution Name</label>
-                                            <input type="text" name="resName" id="resName" class="form-control" placeholder="Resolution Name" value="{{ resolution_info[index].res_name}}">
+                                            <label>Ordinance Name</label>
+                                            <input type="text" name="ordName" id="ordName" class="form-control" placeholder="Ordinance Name" value="{{ ordinance_info[index].ord_name}}">
                                             <br>
-                                            <label>Supervisor</label>
-                                            <input type="text" name="supervisor" id="supervisor" class="form-control" placeholder="Supervisor" value="{{ resolution_info[index].supervisor}}">
+                                            <label>Description</label>
+                                            <input type="text" name="description" id="description" class="form-control" placeholder="Description" value="{{ ordinance_info[index].description}}">
                                             <br>
-                                            <label>Resolve Date</label>
-                                            <input type="date" name="resolveDate" id="resolveDate" class="form-control" placeholder="Resolve Date" value="{{ resolution_info[index].resolve_date}}">
+                                            <label>Session Date</label>
+                                            <input type="date" name="sessionDate" id="sessionDate" class="form-control" placeholder="Resolve Date" value="{{ ordinance_info[index].session_date}}">
                                             <br>
-                                            <label>Uploaded New File (Current file: {{ resolution_info[index].uploaded_file }})</label>
-                                            <input type="file" name="newFile" id="newFile" class="form-control" placeholder="New File" value="{{ resolution_info[index].uploaded_file}}">
+                                            <label>Uploaded New File (Current file: {{ ordinance_info[index].uploaded_file }})</label>
+                                            <input type="file" name="newFile" id="newFile" class="form-control" placeholder="New File" value="{{ ordinance_info[index].uploaded_file}}">
                                             <br>
                                             <label>Uploader</label>
-                                            <input type="text" name="uploader" id="uploader" class="form-control" placeholder="Uploader" value="{{ resolution_info[index].uploader}}" readonly>
+                                            <input type="text" name="uploader" id="uploader" class="form-control" placeholder="Uploader" value="{{ ordinance_info[index].uploader}}" readonly>
                                             <br>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                            <button id="btnEditRes" type="submit" class="btn btn-primary">Save changes</button>
+                                            <button id="btnEditOrd" type="submit" class="btn btn-primary">Save changes</button>
                                         </div>
                                     </form>
                                 </div>
@@ -81,8 +81,7 @@
                         </div>
                     </th>
                     <th>
-                        <a href="/deleteResolution/{{ resolution_info[index].id }}"><span class="glyphicon glyphicon-trash"></span></a>
-
+                        <a href="/deleteOrdinance/{{ ordinance_info[index].id }}"><span class="glyphicon glyphicon-trash"></span></a>
                     </th>
                     {% endif %}
                 </tr>

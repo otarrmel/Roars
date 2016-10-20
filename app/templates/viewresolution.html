@@ -36,7 +36,7 @@
                     <th>{{ resolution_info[index].res_name}}</th>
                     <th>{{ resolution_info[index].supervisor}}</th>
                     <th>{{ resolution_info[index].resolve_date}}</th>
-                    <th>{{ resolution_info[index].uploaded_file}}</th>
+                    <th><a href="/download/{{ resolution_info[index].uploaded_file}}/1" target="_blank">{{ resolution_info[index].uploaded_file}}</a></th>
                     <th>{{ resolution_info[index].uploader}}</th>
                     {% if role_id != 3 %}
                     <th><a href="#" data-toggle="modal" data-target="#myModal_{{ index }}"><span class="glyphicon glyphicon-pencil"></span></a>

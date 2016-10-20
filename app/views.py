@@ -15,6 +15,9 @@ from app.models import Ordinance
 from app.models import Report
 from sqlalchemy.exc import IntegrityError
 from werkzeug.utils import secure_filename
+from flask import send_file
+from flask import make_response
+from flask import send_from_directory
 
 
 def allowed_file(filename, extensions):
@@ -245,7 +248,7 @@ def deleteUser(username):
         UserRole.query.filter_by(user_id=user_role_id).delete()
         User.query.filter_by(username=username).delete()
         db.session.commit()
-        flash(username + 'was deleted in the database...')
+        flash(username + ' was deleted in the database...')
         return redirect(url_for('viewUser'))
     else:
         flash('Url not found!')
@@ -270,13 +273,69 @@ def viewResolution():
                                       'uploaded_file': resolutions[x].uploaded_file,
                                       'uploader': User.query.filter_by(id=resolutions[x].uploader_id).first().username}
                 x += 1
-            flash(session['roleid'])
             return render_template('viewresolution.html', resolution_info=resolution_info, role_id=session['roleid'])
 
         else:
-            flash('No available more resolutions available!')
-        flash(session['roleid'])
+            flash('No more resolution available!')
+
         return render_template('viewresolution.html', role_id=session['roleid'])
+    else:
+        flash('Url not found!')
+        return redirect(url_for('index'))
+
+
+@app.route('/viewOrdinance')
+def viewOrdinance():
+    if session:
+        ordinances = Ordinance.query.all()
+
+        if len(ordinances):
+            x = 0
+            ordinance_info = {}
+
+            while x < len(ordinances):
+                ordinance_info[x] = {'id': ordinances[x].id,
+                                     'ord_num': ordinances[x].ordinance_num,
+                                     'ord_name': ordinances[x].ordinance_name,
+                                     'description': ordinances[x].description,
+                                     'session_date': ordinances[x].session_date,
+                                     'uploaded_file': ordinances[x].uploaded_file,
+                                     'uploader': User.query.filter_by(id=ordinances[x].uploader_id).first().username}
+                x += 1
+            return render_template('viewordinance.html', ordinance_info=ordinance_info, role_id=session['roleid'])
+
+        else:
+            flash('No more ordinance available!')
+
+        return render_template('viewordinance.html', role_id=session['roleid'])
+    else:
+        flash('Url not found!')
+        return redirect(url_for('index'))
+
+
+@app.route('/viewReport')
+def viewReport():
+    if session:
+        reports = Report.query.all()
+
+        if len(reports):
+            x = 0
+            report_info = {}
+
+            while x < len(reports):
+                report_info[x] = {'id': reports[x].id,
+                                  'rep_name': reports[x].report_name,
+                                  'reporter': reports[x].reporter,
+                                  'session_date': reports[x].session_date,
+                                  'uploaded_file': reports[x].uploaded_file,
+                                  'uploader': User.query.filter_by(id=reports[x].uploader_id).first().username}
+                x += 1
+            return render_template('viewreport.html', report_info=report_info, role_id=session['roleid'])
+
+        else:
+            flash('No more report available!')
+
+        return render_template('viewreport.html', role_id=session['roleid'])
     else:
         flash('Url not found!')
         return redirect(url_for('index'))
@@ -305,6 +364,51 @@ def editResolution():
         return redirect(url_for('index'))
 
 
+@app.route('/editOrdinance', methods=['POST', 'GET'])
+def editOrdinance():
+    if request.method == 'POST' and session['roleid'] == 1 or session['roleid'] == 2:
+        ordinance = Ordinance.query.filter_by(id=request.form['inputID']).first()
+        ordinance.ordinance_num = request.form['ordNum']
+        ordinance.ordinance_name = request.form['ordName']
+        ordinance.description = request.form['description']
+        ordinance.session_date = request.form['sessionDate']
+        if request.files['newFile']:
+            new_file = request.files['newFile']
+            filename = secure_filename(new_file.filename)
+            os.remove(os.path.join(app.config['UPLOAD_FOLDER_ORDINANCES'], ordinance.uploaded_file))
+            new_file.save(os.path.join(app.config['UPLOAD_FOLDER_ORDINANCES'], filename))
+            ordinance.uploaded_file = filename
+        ordinance.uploader_id = User.query.filter_by(username=request.form['uploader']).first().id
+        db.session.commit()
+        flash(ordinance.ordinance_name + ' information was updated...')
+        return redirect(url_for('viewOrdinance'))
+    else:
+        flash('Url not found!')
+        return redirect(url_for('index'))
+
+
+@app.route('/editReport', methods=['POST', 'GET'])
+def editReport():
+    if request.method == 'POST' and session['roleid'] == 1 or session['roleid'] == 2:
+        report = Report.query.filter_by(id=request.form['inputID']).first()
+        report.report_name = request.form['repName']
+        report.reporter = request.form['reporter']
+        report.session_date = request.form['sessionDate']
+        if request.files['newFile']:
+            new_file = request.files['newFile']
+            filename = secure_filename(new_file.filename)
+            os.remove(os.path.join(app.config['UPLOAD_FOLDER_REPORTS'], report.uploaded_file))
+            new_file.save(os.path.join(app.config['UPLOAD_FOLDER_REPORTS'], filename))
+            report.uploaded_file = filename
+            report.uploader_id = User.query.filter_by(username=request.form['uploader']).first().id
+        db.session.commit()
+        flash(report.report_name + ' information was updated...')
+        return redirect(url_for('viewReport'))
+    else:
+        flash('Url not found!')
+        return redirect(url_for('index'))
+
+
 @app.route('/deleteResolution/<id>', methods=['POST', 'GET'])
 def deleteResolution(id):
     if session['roleid'] == 1:
@@ -320,3 +424,52 @@ def deleteResolution(id):
     else:
         flash('Url not found!')
         return redirect(url_for('index'))
+
+
+@app.route('/deleteOrdinance/<id>', methods=['POST', 'GET'])
+def deleteOrdinance(id):
+    if session['roleid'] == 1:
+        ordinance = Ordinance.query.filter_by(id=id).first()
+        ord_name = ordinance.ordinance_name
+        filename = ordinance.uploaded_file
+        os.remove(os.path.join(app.config['UPLOAD_FOLDER_ORDINANCES'], filename))
+        Ordinance.query.filter_by(id=id).delete()
+        db.session.commit()
+
+        flash(ord_name + ' was successfully deleted in the database...')
+        return redirect(url_for('viewOrdinance'))
+    else:
+        flash('Url not found!')
+        return redirect(url_for('index'))
+
+
+@app.route('/deleteReport/<id>', methods=['POST', 'GET'])
+def deleteReport(id):
+    if session['roleid'] == 1:
+        report = Report.query.filter_by(id=id).first()
+        rep_name = report.report_name
+        filename = report.uploaded_file
+        os.remove(os.path.join(app.config['UPLOAD_FOLDER_REPORTS'], filename))
+        Report.query.filter_by(id=id).delete()
+        db.session.commit()
+
+        flash(rep_name + ' was successfully deleted in the database...')
+        return redirect(url_for('viewReport'))
+    else:
+        flash('Url not found!')
+        return redirect(url_for('index'))
+
+
+
+@app.route('/download/<filename>/<doc_type>', methods=['GET','POST'])
+def download(filename, doc_type):
+    if int(doc_type) == 1:
+        upload_path = app.config['UPLOAD_FOLDER_RESOLUTIONS']
+    elif int(doc_type) == 2:
+        upload_path = app.config['UPLOAD_FOLDER_ORDINANCES']
+    else:
+        upload_path = app.config['UPLOAD_FOLDER_REPORTS']
+
+    fp = os.path.join(app.root_path, upload_path)
+    return send_from_directory(directory=fp, filename=filename)
+

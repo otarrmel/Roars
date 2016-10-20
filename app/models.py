@@ -130,10 +130,10 @@ class Report(db.Model):
     uploader_id = db.Column(db.Integer(), db.ForeignKey('user.id'))
     DocTypeID = db.Column(db.Integer())
 
-    def __init__(self, report_name, reporter, reported_date, uploaded_file, uploader_id, DocTypeID):
+    def __init__(self, report_name, reporter, session_date, uploaded_file, uploader_id, DocTypeID):
         self.report_name = report_name
         self.reporter = reporter
-        self.reported_date = reported_date
+        self.session_date = session_date
         self.uploaded_file = uploaded_file
         self.uploader_id = uploader_id
         self.DocTypeID = DocTypeID
